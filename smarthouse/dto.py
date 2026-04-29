@@ -50,20 +50,36 @@ class RoomInfo(BaseModel):
     def from_obj(room: Room) -> RoomInfo:
 
         # TODO
-        pass
+        return RoomInfo(
+            rid = room.rid,
+            room_size = room.room_size,
+            room_name = room.room_name,
+            floor = room.floor.level,
+            devices = [device.id for device in room.devices]
+        )
 
 class DeviceInfo(BaseModel):
 
     # TODO
-
+    uuid: str
+    model_name: str
+    supplier: str
+    device_type: str
+    
     @staticmethod
     def from_obj(device: Device) -> DeviceInfo:
 
         # TODO
-        pass
+        return DeviceInfo(
+            uuid = device.id,
+            model_name = device.model_name,
+            supplier = device.supplier,
+            device_type = device.device_type)
 
 class ActuatorStateInfo(BaseModel):
 
     # TODO
-    pass
+    state: str          # 'on' or 'off'
+    value: float | None = None
+    
 

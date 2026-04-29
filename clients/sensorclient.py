@@ -46,6 +46,9 @@ class SensorClient:
         response = None
 
         # TODO
+        url = common.BASE_URL + f"sensor/{self.did}/current"
+        headers = {"content-type": "application/json"}
+        response = requests.put(url, data=m.to_json_str(), headers=headers)
         return response
 
 

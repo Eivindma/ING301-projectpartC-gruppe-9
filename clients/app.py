@@ -39,7 +39,11 @@ class SmartHouseApp:
 
         # TODO START
 
-        pass
+        url = common.BASE_URL + f"actuator/{self.actuator_did}/state"
+        self.actuator_state = common.ActuatorState(new_state)
+        headers = {"Content-Type": "application/json"}
+        response = requests.put(url, data=self.actuator_state.to_json_str(), headers=headers)
+        return response
 
         # TODO END
 
@@ -51,7 +55,10 @@ class SmartHouseApp:
 
         # TODO START
 
-        pass
+        url = common.BASE_URL + f"sensor/{self.sensor_did}/current"
+        response = requests.get(url)
+        measurement = common.SensorMeasurement.from_json_str(response.text)
+        return float(measurement.value)
 
         # TODO END
 

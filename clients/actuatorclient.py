@@ -30,8 +30,10 @@ class ActuatorClient:
         actuator_state = None
 
         # TODO
-
-        return None
+        url = common.BASE_URL + f"actuator/{self.did}/state"
+        response = requests.get(url)
+        actuator_state = common.ActuatorState.from_json_str(response.text)
+        return actuator_state.state
 
 
     def run(self):
@@ -42,8 +44,14 @@ class ActuatorClient:
         """
 
         # TODO
-
-
+        while True:
+            state = self.get_state()
+            if state:
+                self.state.set_state(state)
+                logging.info(f"Actuator {self.did} state: {self.state.state}")
+            time.sleep(LIGHTBULB_CLIENT_SLEEP_TIME)
+            
+            
 if __name__ == '__main__':
 
     actuator = ActuatorClient(common.LIGHT_BULB_ACTUATOR_DID)
